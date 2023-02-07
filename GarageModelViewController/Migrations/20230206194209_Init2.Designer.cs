@@ -4,6 +4,7 @@ using GarageModelViewController.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageModelViewController.Migrations
 {
     [DbContext(typeof(GarageModelViewControllerContext))]
-    partial class GarageModelViewControllerContextModelSnapshot : ModelSnapshot
+    [Migration("20230206194209_Init2")]
+    partial class Init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,9 +27,11 @@ namespace GarageModelViewController.Migrations
 
             modelBuilder.Entity("GarageModelViewController.Models.ParkedVehicle", b =>
                 {
-                    b.Property<string>("RegistrationNumber")
-                        .HasMaxLength(6)
-                        .HasColumnType("nvarchar(6)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Ankomsttid")
                         .HasColumnType("datetime2");
@@ -39,9 +44,6 @@ namespace GarageModelViewController.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("ModelName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -49,10 +51,14 @@ namespace GarageModelViewController.Migrations
                     b.Property<int>("NumberOfWheels")
                         .HasColumnType("int");
 
+                    b.Property<string>("RegistrationNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("VehicleType")
                         .HasColumnType("int");
 
-                    b.HasKey("RegistrationNumber");
+                    b.HasKey("Id");
 
                     b.ToTable("ParkedVehicle");
                 });

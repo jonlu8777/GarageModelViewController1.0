@@ -51,18 +51,18 @@ namespace GarageModelViewController.Controllers
             return View(parkedVehicle);
         }
 
-        // GET: ParkedVehicles/Create
+        // GET: ParkedVehicles/Park
         public IActionResult Park()
         {
             return View();
         }
 
-        // POST: ParkedVehicles/Create
+        // POST: ParkedVehicles/Park
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Ankomsttid,NumberOfWheels,VehicleType,RegistrationNumber,Color,Brand,ModelName")] ParkedVehicle parkedVehicle)
+        public async Task<IActionResult> Park([Bind("Id,Ankomsttid,NumberOfWheels,VehicleType,RegistrationNumber,Color,Brand,ModelName")] ParkedVehicle parkedVehicle)
         {
             if (ModelState.IsValid)
             {
@@ -125,7 +125,7 @@ namespace GarageModelViewController.Controllers
         }
 
         // GET: ParkedVehicles/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Unpark(int? id)
         {
             if (id == null || _context.ParkedVehicle == null)
             {
@@ -143,9 +143,9 @@ namespace GarageModelViewController.Controllers
         }
 
         // POST: ParkedVehicles/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("Unpark")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> UnparkConfirmed(int id)
         {
             if (_context.ParkedVehicle == null)
             {
