@@ -12,7 +12,7 @@
 
 <form asp-action="Filter" asp-controller="ParkedVehicles" method="get">
     <div class="input-group mb-3">
-        <input type="text" class="form-control" name="title" placeholder="Search on title..." />
+        <input type="text" class="form-control" name="title" placeholder="Search on registration number..." />
 
         <div class="input-group-append">
             <select class="form-control" name="genre" asp-items="@Html.GetEnumSelectList<VehicleType>()">
