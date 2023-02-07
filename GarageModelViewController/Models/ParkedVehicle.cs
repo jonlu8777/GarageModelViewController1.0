@@ -13,7 +13,9 @@ namespace GarageModelViewController.Models
 	    private string modelName;
 		private int numberOfWheels;
 		private VehicleType vehicleType = VehicleType.None;
-		private DateTime ankomsttid = DateTime.Now;
+		//private DateTime ankomsttid = DateTime.Now;
+		//private DateTime now= DateTime.Now;
+		
 
 		public int Id { get; set; }
         [ReadOnly(true)]
@@ -56,6 +58,10 @@ namespace GarageModelViewController.Models
 			get { return modelName; }
 			set { modelName = value; }
 		}
+
+		//public DateTime? Now { get {  return DateTime.Now; } }
+
+		//public TimeSpan? ParkedTime { get { return this.now - this.ankomsttid; } }	
 
     }
 }

@@ -24,6 +24,13 @@ namespace GarageModelViewController.Controllers
             return View();
         }
 
+        public async Task<IActionResult> OverviewModelView()
+        {
+            return _context.ParkedVehicle != null ?
+                         View(await _context.ParkedVehicle.ToListAsync()) :
+                         Problem("Entity set 'GarageModelViewControllerContext.ParkedVehicle'  is null.");
+        }
+
 
         // GET: ParkedVehicles
         public async Task<IActionResult> Index()
