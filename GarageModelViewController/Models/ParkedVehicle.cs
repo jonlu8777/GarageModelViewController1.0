@@ -22,7 +22,7 @@ namespace GarageModelViewController.Models
         public DateTime Ankomsttid
 		{
 			get { return ankomsttid; }
-			//set { ankomsttid = DateTime.Now; }
+			set { ankomsttid = value; }
 		}
         [Range(0,8)]
         public int NumberOfWheels

@@ -33,6 +33,20 @@ namespace GarageModelViewController.Controllers
                           Problem("Entity set 'GarageModelViewControllerContext.ParkedVehicle'  is null.");
         }
 
+        public async Task<IActionResult> Filter(string title, int? genre)
+        {
+
+            var model = string.IsNullOrWhiteSpace(title) ?
+                                    _context.ParkedVehicle :
+                                    _context.ParkedVehicle.Where(m => m.RegistrationNumber.StartsWith(title));
+
+            model = genre is null ?
+                                model :
+                                model.Where(m => (int)m.VehicleType == genre);
+
+            return View(nameof(Index), await model.ToListAsync());
+        }
+
         // GET: ParkedVehicles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
