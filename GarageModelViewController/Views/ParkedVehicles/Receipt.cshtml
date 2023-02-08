@@ -1,0 +1,57 @@
+﻿
+@model GarageModelViewController.Models.Receipt
+
+@{
+    ViewData["Title"] = "Receipt";
+}
+
+<h1>Receipt</h1>
+
+<h3>This is your receipt!</h3>
+<div>
+    <h4>ParkedVehicle</h4>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ankomsttid)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ankomsttid)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Now)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Now)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ParkedTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParkedTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalPrice)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RegistrationNummber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RegistrationNummber)
+        </dd>
+        
+    </dl>
+
+    <a type="text/html" asp-action="Index">Back to List</a>
+</div>
+

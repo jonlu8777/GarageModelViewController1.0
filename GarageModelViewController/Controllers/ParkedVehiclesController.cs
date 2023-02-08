@@ -30,7 +30,46 @@ namespace GarageModelViewController.Controllers
                          View(await _context.ParkedVehicle.ToListAsync()) :
                          Problem("Entity set 'GarageModelViewControllerContext.ParkedVehicle'  is null.");
         }
+     
+        public async Task<IActionResult> Receipt(/*string name, int salary*/ /*object genericObject*/ /*ParkedVehicle model*/ int? id)
+        {
+            // Undvik dessa
+            // ViewData["Name"] = name;
+            // ViewBag.Name = name;
+            // TempData["name"] = name;                                RegNr,in/ut-checkningstid, total parkerings period och pris automatiskt efter att en bil checkatsut. 
+            /*
+            var model = await _context.ParkedVehicle.FindAsync(id);
 
+            var newModel = new Receipt();
+            newModel.ParkedTime = (TimeSpan)model.ParkedTime;
+            newModel.Ankomsttid = (DateTime)model.Ankomsttid;
+
+            return View(nameof(Receipt), newModel);*/
+            if (id == null || _context.ParkedVehicle == null)
+            {
+                return NotFound();
+            }
+
+            var parkedVehicle = await _context.ParkedVehicle
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (parkedVehicle == null)
+            {
+                return NotFound();
+            }
+
+            //Nu test med Receipt 
+
+            var newModel = new Receipt();
+            newModel.ParkedTime = (TimeSpan)parkedVehicle.ParkedTime;
+            newModel.Ankomsttid = (DateTime)parkedVehicle.Ankomsttid;
+            newModel.Now = DateTime.Now;
+            newModel.RegistrationNummber = parkedVehicle.RegistrationNumber;
+             
+            //slutar test här
+
+
+            return View(newModel);
+        }
 
         // GET: ParkedVehicles
         public async Task<IActionResult> Index()

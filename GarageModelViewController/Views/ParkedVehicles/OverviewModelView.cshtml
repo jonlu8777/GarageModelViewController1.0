@@ -21,6 +21,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.RegistrationNumber)
             </th>
+
+           
+            <th>
+                @Html.DisplayNameFor(model => model.ParkedTime)
+            </th>
+
             <!--
             <th>
                 @Html.DisplayNameFor(model => model.Color)
@@ -31,6 +37,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.ModelName)
             </th> -->
+
             <th></th>
         </tr>
     </thead>
@@ -51,6 +58,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.RegistrationNumber)
                 </td>
+
+             
+              
+                <td>
+                    @Html.DisplayFor(modelItem => item.ParkedTime)
+                </td>
+
+
+
                     <!--
                 <td>
                     @Html.DisplayFor(modelItem => item.Color)
