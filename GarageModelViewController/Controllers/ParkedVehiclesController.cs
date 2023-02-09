@@ -37,14 +37,8 @@ namespace GarageModelViewController.Controllers
             // ViewData["Name"] = name;
             // ViewBag.Name = name;
             // TempData["name"] = name;                                RegNr,in/ut-checkningstid, total parkerings period och pris automatiskt efter att en bil checkatsut. 
-            /*
-            var model = await _context.ParkedVehicle.FindAsync(id);
-
-            var newModel = new Receipt();
-            newModel.ParkedTime = (TimeSpan)model.ParkedTime;
-            newModel.Ankomsttid = (DateTime)model.Ankomsttid;
-
-            return View(nameof(Receipt), newModel);*/
+            
+            
             if (id == null || _context.ParkedVehicle == null)
             {
                 return NotFound();
@@ -218,6 +212,7 @@ namespace GarageModelViewController.Controllers
             }
             
             await _context.SaveChangesAsync();
+            // return View(nameof(Index)); fungerade inte! 
             return RedirectToAction(nameof(Index));
         }
 
