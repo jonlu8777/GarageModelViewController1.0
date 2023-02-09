@@ -123,9 +123,10 @@ namespace GarageModelViewController.Controllers
             if (!_context.ParkedVehicle.Any(e => e.RegistrationNumber == parkedVehicle.RegistrationNumber))    //Ingen bil ska matcha !! 
             if (ModelState.IsValid)
             {
+
+                    //ModelState.AddModelError(string.Empty, "Your vehicle was parked, success!");
                 _context.Add(parkedVehicle);
                 await _context.SaveChangesAsync();
-                    ModelState.AddModelError(string.Empty, "Your vehicle was parked, success!");
                     return RedirectToAction(nameof(Index));
             }
 
