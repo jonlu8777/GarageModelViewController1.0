@@ -118,12 +118,21 @@ namespace GarageModelViewController.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Park([Bind("Id,Ankomsttid,NumberOfWheels,VehicleType,RegistrationNumber,Color,Brand,ModelName")] ParkedVehicle parkedVehicle)
         {
+
+
+            if (!_context.ParkedVehicle.Any(e => e.RegistrationNumber == parkedVehicle.RegistrationNumber))    //Ingen bil ska matcha !! 
             if (ModelState.IsValid)
             {
                 _context.Add(parkedVehicle);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                    ModelState.AddModelError(string.Empty, "Your vehicle was parked, success!");
+                    return RedirectToAction(nameof(Index));
             }
+
+                ModelState.AddModelError(string.Empty, "Your vehicle was not parked, try again!");
+            if (_context.ParkedVehicle.Any(e => e.RegistrationNumber == parkedVehicle.RegistrationNumber))  //dubbelkollar iaf 
+                ModelState.AddModelError(string.Empty, "There is something wrong with your registration number.");
+
             return View(parkedVehicle);
         }
 
@@ -220,5 +229,8 @@ namespace GarageModelViewController.Controllers
         {
           return (_context.ParkedVehicle?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+
+
     }
 }
