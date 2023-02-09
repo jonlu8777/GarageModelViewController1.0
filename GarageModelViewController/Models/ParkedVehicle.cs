@@ -17,7 +17,7 @@ namespace GarageModelViewController.Models
 
 		public int Id { get; set; }
         [ReadOnly(true)]
-        
+		[DisplayName("Time Of Arrival")]
         public DateTime? Ankomsttid {	get; private set;  } = DateTime.Now;
         [Range(0,8)]
         public int NumberOfWheels

@@ -31,7 +31,7 @@ namespace GarageModelViewController.Controllers
                          Problem("Entity set 'GarageModelViewControllerContext.ParkedVehicle'  is null.");
         }
      
-        public async Task<IActionResult> Receipt(/*string name, int salary*/ /*object genericObject*/ /*ParkedVehicle model*/ int? id)
+        public async Task<IActionResult> Receipt(int? id)
         {
             // Undvik dessa
             // ViewData["Name"] = name;
@@ -51,7 +51,7 @@ namespace GarageModelViewController.Controllers
                 return NotFound();
             }
 
-            //Nu test med Receipt 
+            //Nu kod här nedan, skapa ett kvitto view model, från en parkedVehicle model
 
             var newModel = new Receipt();
             newModel.ParkedTime = (TimeSpan)parkedVehicle.ParkedTime;
@@ -59,7 +59,7 @@ namespace GarageModelViewController.Controllers
             newModel.Now = DateTime.Now;
             newModel.RegistrationNummber = parkedVehicle.RegistrationNumber;
              
-            //slutar test här
+            
 
 
             return View(newModel);
@@ -120,19 +120,20 @@ namespace GarageModelViewController.Controllers
         {
 
 
-            if (!_context.ParkedVehicle.Any(e => e.RegistrationNumber == parkedVehicle.RegistrationNumber))    //Ingen bil ska matcha !! 
+            if (!_context.ParkedVehicle.Any(e => e.RegistrationNumber == parkedVehicle.RegistrationNumber))    //Inget registreringnummer ska matcha !! 
             if (ModelState.IsValid)
             {
-
-                    //ModelState.AddModelError(string.Empty, "Your vehicle was parked, success!");
                 _context.Add(parkedVehicle);
                 await _context.SaveChangesAsync();
+
+                    TempData["success"] = "PARKING WAS SUCCESSFULL!";               //Feedback parkering lyckades!
+
                     return RedirectToAction(nameof(Index));
             }
 
                 ModelState.AddModelError(string.Empty, "Your vehicle was not parked, try again!");
-            if (_context.ParkedVehicle.Any(e => e.RegistrationNumber == parkedVehicle.RegistrationNumber))  //dubbelkollar iaf 
-                ModelState.AddModelError(string.Empty, "There is something wrong with your registration number.");
+            if (_context.ParkedVehicle.Any(e => e.RegistrationNumber == parkedVehicle.RegistrationNumber))  //dubbelkollar regNr...
+                ModelState.AddModelError(string.Empty, "Your registration number is already parked!");
 
             return View(parkedVehicle);
         }
@@ -171,6 +172,8 @@ namespace GarageModelViewController.Controllers
                 {
                     _context.Update(parkedVehicle);
                     await _context.SaveChangesAsync();
+
+                    TempData["success"] = "PARKED VEHICLE UPDATED SUCCESSFULLY!";               //Feedback success! 
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -189,14 +192,14 @@ namespace GarageModelViewController.Controllers
         }
 
         // GET: ParkedVehicles/Delete/5
-        public async Task<IActionResult> Unpark(int? id)
+        public async Task<IActionResult> Unpark(int? id) 
         {
             if (id == null || _context.ParkedVehicle == null)
             {
                 return NotFound();
             }
 
-            var parkedVehicle = await _context.ParkedVehicle
+            var parkedVehicle = await _context.ParkedVehicle          //hämtar från db rätt id...
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (parkedVehicle == null)
             {
@@ -219,11 +222,22 @@ namespace GarageModelViewController.Controllers
             if (parkedVehicle != null)
             {
                 _context.ParkedVehicle.Remove(parkedVehicle);
+
             }
             
             await _context.SaveChangesAsync();
-            // return View(nameof(Index)); fungerade inte! 
-            return RedirectToAction(nameof(Index));
+            TempData["success"] = "UNPARKED VEHICLE SUCCESS!";               //Feedback success! 
+
+            //skapar ett nytt kvitt view model, från den utvalda parkedVehicle 
+
+            var newModel = new Receipt();
+            newModel.ParkedTime = (TimeSpan)parkedVehicle.ParkedTime;
+            newModel.Ankomsttid = (DateTime)parkedVehicle.Ankomsttid;
+            newModel.Now = DateTime.Now;
+            newModel.RegistrationNummber = parkedVehicle.RegistrationNumber;
+
+            return View(nameof(Receipt), newModel); //tvungen att skicka med rätt view modell!!!!  
+            //return RedirectToAction(nameof(Index)); 
         }
 
         private bool ParkedVehicleExists(int id)

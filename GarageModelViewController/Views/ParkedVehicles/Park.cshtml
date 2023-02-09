@@ -13,8 +13,8 @@
         <form asp-action="Park">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Ankomsttid" class="control-label"></label>
-                <input asp-for="Ankomsttid" readonly class="form-control" />
+                <label class="control-label">Time (parking not started yet!)</label>
+                <input value="@System.DateTime.Now" readonly class="form-control" />
                 <span asp-validation-for="Ankomsttid" class="text-danger"></span>
             </div>
             <div class="form-group">

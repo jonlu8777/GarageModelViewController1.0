@@ -3,7 +3,10 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+@if(TempData["success"] != null)
+{
+    <h2 style="color:green">@TempData["success"] </h2>
+}
 <h1>Index</h1>
 
 <p>
@@ -25,7 +28,7 @@
     </div>
 </form>
 
-<table class="table">
+<table class="table table-bordered table-responsive table-hover">
     <thead>
         <tr>
             <th>
