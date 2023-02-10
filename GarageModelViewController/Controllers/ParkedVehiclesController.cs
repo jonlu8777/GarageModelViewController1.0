@@ -38,7 +38,6 @@ namespace GarageModelViewController.Controllers
         {
 
             var stats = _context.ParkedVehicle.ToListAsync();
-            //stats.Result.Where(e=>e.Equals(VehicleType())).ToList();
             var wheels = stats.Result.Where(x => x.NumberOfWheels >= 0);
             var wheels2 = wheels.Sum(x => x.NumberOfWheels);
             var nOfNone = stats.Result.Where(e => e.VehicleType == Models.VehicleType.None).Count();
