@@ -31,7 +31,46 @@ namespace GarageModelViewController.Controllers
                          View(await _context.ParkedVehicle.ToListAsync()) :
                          Problem("Entity set 'GarageModelViewControllerContext.ParkedVehicle'  is null.");
         }
-     
+
+
+
+        public async Task<IActionResult> Statistics()
+        {
+
+            var stats = _context.ParkedVehicle.ToListAsync();
+            //stats.Result.Where(e=>e.Equals(VehicleType())).ToList();
+            var wheels = stats.Result.Where(x => x.NumberOfWheels >= 0);
+            var wheels2 = wheels.Sum(x => x.NumberOfWheels);
+            var nOfNone = stats.Result.Where(e => e.VehicleType == Models.VehicleType.None).Count();
+            var nOfCar = stats.Result.Where(e => e.VehicleType == Models.VehicleType.Car).Count();
+            var nOfAirplane = stats.Result.Where(e => e.VehicleType == Models.VehicleType.Airplane).Count();
+            var nOfMotorcycle = stats.Result.Where(e => e.VehicleType == Models.VehicleType.Motorcycle).Count();
+            var nOfBus = stats.Result.Where(e => e.VehicleType == Models.VehicleType.Bus).Count();
+
+
+            var totalIncome = stats.Result.Where(e=>e.ParkedTime>=TimeSpan.Zero).ToList();
+            var total = totalIncome.Sum(t => (int)t.ParkedTime.Value.Hours+1);
+            var totalinc = (total * 35);
+
+            var model = new Statistics()
+            {
+
+                TotalNumberOfWheels= wheels2,
+                NumberOfAircrafts= nOfAirplane,
+                NumberOfCars= nOfCar,
+                NumberOfMotorcycles= nOfMotorcycle,
+                NumberOfNone= nOfNone,
+                NumberOfBuses=nOfBus,
+                TotalIncome = totalinc
+
+            };
+            
+            return _context.ParkedVehicle != null ?
+                         View(model) :
+                         Problem("Entity set 'GarageModelViewControllerContext.ParkedVehicle'  is null.");
+        }
+
+
         public async Task<IActionResult> Receipt(int? id)
         {
             // Undvik dessa

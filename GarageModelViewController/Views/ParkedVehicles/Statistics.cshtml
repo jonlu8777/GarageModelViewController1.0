@@ -1,0 +1,70 @@
+﻿@model GarageModelViewController.Models.Statistics //Har ändrat!
+
+@{
+    ViewData["Title"] = "Statistics";
+}
+
+<h1>Statistics</h1>
+
+<h3>Here are some statistics!</h3>
+<div>
+    <h4>ParkedVehicles</h4>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfNone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfNone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfCars)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfCars)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfMotorcycles)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfMotorcycles)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfAircrafts)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfAircrafts)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfBuses)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfBuses)
+        </dd>
+         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalNumberOfWheels)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalNumberOfWheels)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalIncome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalIncome)
+        </dd>
+
+    </dl>
+
+    <a type="text/html" asp-action="Index">Back to List</a>
+    <button type="button" class="btn btn-success" onclick="printPage()">Print</button>
+</div>
+<script type="text/javascript">
+    function printPage() {
+        window.print()
+    }
+
+</script>
+
+
