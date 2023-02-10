@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GarageModelViewController.Data;
 using GarageModelViewController.Models;
+using GarageModelViewController.ViewModels;
 
 namespace GarageModelViewController.Controllers
 {
@@ -51,16 +52,22 @@ namespace GarageModelViewController.Controllers
                 return NotFound();
             }
 
-            //Nu kod här nedan, skapa ett kvitto view model, från en parkedVehicle model
+            //Nu kod här nedan, skapa ett kvitto view model, från en parkedVehicle model                    AKOMMENTERAR NEDAN, 14:34!
 
-            var newModel = new Receipt();
-            newModel.ParkedTime = (TimeSpan)parkedVehicle.ParkedTime;
-            newModel.Ankomsttid = (DateTime)parkedVehicle.Ankomsttid;
-            newModel.Now = DateTime.Now;
-            newModel.RegistrationNummber = parkedVehicle.RegistrationNumber;
-             
+            //var newModel = new Receipt();
+            //newModel.ParkedTime = (TimeSpan)parkedVehicle.ParkedTime;
+            //newModel.Ankomsttid = (DateTime)parkedVehicle.Ankomsttid;
+            //newModel.Now = DateTime.Now;
+            //newModel.RegistrationNummber = parkedVehicle.RegistrationNumber;
+
+            var newModel = new ReceiptViewModel()
+            {
+                ParkedVehicle = parkedVehicle,
+                Now = DateTime.Now,
+                ParkedTime = DateTime.Now - parkedVehicle.Ankomsttid.Value
+        };
             
-
+            //kan beböha mer data faktiskt!
 
             return View(newModel);
         }
@@ -230,11 +237,20 @@ namespace GarageModelViewController.Controllers
 
             //skapar ett nytt kvitt view model, från den utvalda parkedVehicle 
 
-            var newModel = new Receipt();
-            newModel.ParkedTime = (TimeSpan)parkedVehicle.ParkedTime;
-            newModel.Ankomsttid = (DateTime)parkedVehicle.Ankomsttid;
-            newModel.Now = DateTime.Now;
-            newModel.RegistrationNummber = parkedVehicle.RegistrationNumber;
+            //var newModel = new Receipt();
+            //newModel.ParkedTime = (TimeSpan)parkedVehicle.ParkedTime;
+            //newModel.Ankomsttid = (DateTime)parkedVehicle.Ankomsttid;
+            //newModel.Now = DateTime.Now;
+            //newModel.RegistrationNummber = parkedVehicle.RegistrationNumber;
+
+            var newModel = new ReceiptViewModel()
+            {
+                ParkedVehicle = parkedVehicle,
+                Now = DateTime.Now,
+                ParkedTime = DateTime.Now - parkedVehicle.Ankomsttid.Value
+            };
+            
+            //kan beböha mer data faktiskt!
 
             return View(nameof(Receipt), newModel); //tvungen att skicka med rätt view modell!!!!  
             //return RedirectToAction(nameof(Index)); 

@@ -1,5 +1,5 @@
 ﻿
-@model GarageModelViewController.Models.Receipt
+@model GarageModelViewController.ViewModels.ReceiptViewModel //Har ändrat! 
 
 @{
     ViewData["Title"] = "Receipt";
@@ -14,10 +14,10 @@
 
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Ankomsttid)
+            @Html.DisplayNameFor(model => model.ParkedVehicle.Ankomsttid)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Ankomsttid)
+            @Html.DisplayFor(model => model.ParkedVehicle.Ankomsttid)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Now)
@@ -44,10 +44,10 @@
             @Html.DisplayFor(model => model.TotalPrice)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RegistrationNummber)
+            @Html.DisplayNameFor(model => model.ParkedVehicle.RegistrationNumber)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RegistrationNummber)
+            @Html.DisplayFor(model => model.ParkedVehicle.RegistrationNumber)
         </dd>
         
     </dl>
