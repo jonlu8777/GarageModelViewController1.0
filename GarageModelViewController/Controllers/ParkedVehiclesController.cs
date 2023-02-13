@@ -48,8 +48,9 @@ namespace GarageModelViewController.Controllers
 
 
             var totalIncome = stats.Result.Where(e=>e.ParkedTime>=TimeSpan.Zero).ToList();
-            var total = totalIncome.Sum(t => (int)t.ParkedTime.Value.Hours+1);
-            var totalinc = (total * 35);
+            var totalHours = totalIncome.Sum(t => (int)t.ParkedTime.Value.Hours+1);
+            var totalDays = totalIncome.Sum(t => (int)t.ParkedTime.Value.Days);
+            var totalinc = (totalHours * 35)+(totalDays*840);
 
             var model = new Statistics()
             {
