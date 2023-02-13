@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GarageModelViewController.Data;
 using GarageModelViewController.Models;
-using GarageModelViewController.ViewModels;
+//using GarageModelViewController.ViewModels;
 
 namespace GarageModelViewController.Controllers
 {
@@ -112,11 +112,29 @@ namespace GarageModelViewController.Controllers
         }
 
         // GET: ParkedVehicles
+        //public async Task<IActionResult> Index()
+        //{
+        //    return _context.ParkedVehicle != null ?
+        //                View(await _context.ParkedVehicle.ToListAsync()) :
+        //                Problem("Entity set 'GarageModelViewControllerContext.ParkedVehicle'  is null.");
+        //}
+
         public async Task<IActionResult> Index()
         {
-              return _context.ParkedVehicle != null ? 
-                          View(await _context.ParkedVehicle.ToListAsync()) :
-                          Problem("Entity set 'GarageModelViewControllerContext.ParkedVehicle'  is null.");
+            if (_context.ParkedVehicle != null)
+            {
+                var list = await _context.ParkedVehicle.ToListAsync();
+                var veiwModel = new IndexViewModel()
+                {
+                    Vehicles = list,
+                    TotalParkingSpots = 30
+
+                };
+
+                return View(veiwModel);
+            }
+            else
+                return Problem("Entity set 'GarageModelViewControllerContext.ParkedVehicle'  is null.");
         }
 
         public async Task<IActionResult> Filter(string title, int? genre)
@@ -129,8 +147,15 @@ namespace GarageModelViewController.Controllers
             model = genre is null ?
                                 model :
                                 model.Where(m => (int)m.VehicleType == genre);
+            await model.ToListAsync();
 
-            return View(nameof(Index), await model.ToListAsync());
+            var modelView = new IndexViewModel()
+            {
+                Vehicles= model,
+                TotalParkingSpots= 30
+            };
+
+            return View(nameof(Index), modelView);
         }
 
         // GET: ParkedVehicles/Details/5

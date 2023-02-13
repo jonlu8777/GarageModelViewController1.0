@@ -1,6 +1,4 @@
-﻿using GarageModelViewController.Models;
-
-namespace GarageModelViewController.ViewModels
+﻿namespace GarageModelViewController.Models
 {
     public class ReceiptViewModel
     {
@@ -12,10 +10,10 @@ namespace GarageModelViewController.ViewModels
         public int Price
         {
             get { return 35; }
-            private set { price = this.Price; }
+            private set { price = Price; }
         }
 
-        public int TotalPrice { get { return this.Price + (this.Price * (int)this.ParkedTime.TotalHours); } private set { price = 10; } } //Eventuellt räkna ut priset här här! 
+        public int TotalPrice { get { return Price + Price * (int)ParkedTime.TotalHours; } private set { price = 10; } } //Eventuellt räkna ut priset här här! 
 
         public ParkedVehicle? ParkedVehicle { get; set; }
 

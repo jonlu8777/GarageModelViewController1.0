@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GarageModelViewController.Models.ParkedVehicle>
+﻿@model IndexViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -12,10 +12,11 @@
      </script>
 }
 <h1>Index</h1>
-
 <p>
     <a asp-action="Park">Park New</a>
 </p>
+
+<h4>@Html.DisplayNameFor(m=>m.TotalParkingSpots) @Model.TotalParkingSpots</h4>
 
 <form asp-action="Filter" asp-controller="ParkedVehicles" method="get">
     <div class="input-group mb-3">
@@ -32,7 +33,9 @@
     </div>
 </form>
 
-<table class="table table-bordered table-responsive table-hover">
+<partial name="PartialViewVehiclesTable" model="@Model.Vehicles" />
+
+@*<table class="table table-bordered table-responsive table-hover">
     <thead>
         <tr>
             <th>
@@ -93,3 +96,4 @@
 }
     </tbody>
 </table>
+*@
