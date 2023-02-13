@@ -19,7 +19,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.RegistrationNumber)
             </th>
-
+            <th>
+                @Html.DisplayName("Days Parked")
+            </th>
            
             <th>
                 @Html.DisplayName("Hours Parked")
@@ -47,7 +49,9 @@
                     @Html.DisplayFor(modelItem => item.RegistrationNumber)
                 </td>
 
-             
+                <td>
+                    @Html.DisplayFor(modelItem => item.ParkedTime.Value.Days)
+                </td>
               
                 <td>
                     @Html.DisplayFor(modelItem => item.ParkedTime.Value.Hours)

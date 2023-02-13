@@ -104,7 +104,7 @@ namespace GarageModelViewController.Controllers
                 ParkedVehicle = parkedVehicle,
                 Now = DateTime.Now,
                 ParkedTime = DateTime.Now - parkedVehicle.Ankomsttid.Value
-        };
+             };
             
             //kan beböha mer data faktiskt!
 

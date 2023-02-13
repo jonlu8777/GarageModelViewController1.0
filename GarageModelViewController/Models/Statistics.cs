@@ -17,9 +17,8 @@ namespace GarageModelViewController.Models
         public int NumberOfBuses { get; set; }
         [DisplayName("Number Of Wheels")]
         public int TotalNumberOfWheels { get; set; }
-       
-        
-         public int TotalIncome { get; set; }
+        [DisplayName("Total Income")]
+        public int TotalIncome { get; set; }
 
 
     }
