@@ -31,8 +31,8 @@ namespace GarageModelViewController.Models
         public string RegistrationNumber
 		{
 			get { return registrationNumber; }
-			set { registrationNumber = value; }    // try på hela edit, samt try på hela park i controllern? sen catch. popups??? 
-		}                                         //ska jag skapa ny model, eller ska jag skapa validering i Controllern, eller både och? 
+			set { registrationNumber = value; }   
+		}                                         
 		[StringLength(20)]
         public string Color
 		{
@@ -52,6 +52,8 @@ namespace GarageModelViewController.Models
 			set { modelName = value; }
 		}
 		public TimeSpan? ParkedTime { get { return DateTime.Now - this.Ankomsttid; } }	
+
+		public int? ParkingSpot { get; set; }	
 
     }
 }

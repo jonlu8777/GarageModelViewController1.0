@@ -123,11 +123,12 @@ namespace GarageModelViewController.Controllers
         {
             if (_context.ParkedVehicle != null)
             {
+                var parkingSpots = await _context.ParkedVehicle.CountAsync();
                 var list = await _context.ParkedVehicle.ToListAsync();
                 var veiwModel = new IndexViewModel()
                 {
                     Vehicles = list,
-                    TotalParkingSpots = 30
+                    TotalParkingSpots = 5-parkingSpots
 
                 };
 
@@ -149,10 +150,11 @@ namespace GarageModelViewController.Controllers
                                 model.Where(m => (int)m.VehicleType == genre);
             await model.ToListAsync();
 
+            var parkingSpots = await _context.ParkedVehicle.CountAsync();
             var modelView = new IndexViewModel()
             {
                 Vehicles= model,
-                TotalParkingSpots= 30
+                TotalParkingSpots= 5-parkingSpots
             };
 
             return View(nameof(Index), modelView);
@@ -194,13 +196,58 @@ namespace GarageModelViewController.Controllers
             if (!_context.ParkedVehicle.Any(e => e.RegistrationNumber == parkedVehicle.RegistrationNumber))    //Inget registreringnummer ska matcha !! 
             if (ModelState.IsValid)
             {
+
+                    var parkingSpots =await _context.ParkedVehicle.CountAsync(); //Antal P-upptagna
+                   
+                    if(parkingSpots>=5) //Full parkering return! obs 5 platser!
+                    {
+                        ModelState.AddModelError(string.Empty, "Parking lot is full!");
+                        if (_context.ParkedVehicle.Any(e => e.RegistrationNumber == parkedVehicle.RegistrationNumber))  //dubbelkollar regNr...
+                            ModelState.AddModelError(string.Empty, "Your registration number is already parked!");
+
+                        return View(parkedVehicle);
+
+                    }
+                    if(_context.ParkedVehicle.Any(e=>e.ParkingSpot >= 1)) //Om Det finns något parkerat forddon sedan tidigare.  
+                    {
+                   
+
+     
+                        var existingNumbers = await _context.ParkedVehicle.Select(e=>e.ParkingSpot).ToListAsync();
+
+                        var allNumbers = Enumerable.Range(1, 5);
+                        var result = allNumbers.Where(x => !existingNumbers.Contains(x)).First();
+
+                        parkedVehicle.ParkingSpot =result;
+                       
+
+
+                    }
+                    else //Annars tillsätt ett första P-plats
+                        parkedVehicle.ParkingSpot = 1;
+                
+
+
+                 
+
+
                 _context.Add(parkedVehicle);
                 await _context.SaveChangesAsync();
 
                     TempData["success"] = "PARKING WAS SUCCESSFULL!";               //Feedback parkering lyckades!
 
                     return RedirectToAction(nameof(Index));
-            }
+                    //TEST 18:44
+                    //var list = await _context.ParkedVehicle.ToListAsync();
+                    //var newView = new IndexViewModel()
+                    //{
+                    //    TotalParkingSpots = parkingSpots,
+                    //    Vehicles = list
+
+                    //};
+                    //return View(newView);
+
+                }
 
                 ModelState.AddModelError(string.Empty, "Your vehicle was not parked, try again!");
             if (_context.ParkedVehicle.Any(e => e.RegistrationNumber == parkedVehicle.RegistrationNumber))  //dubbelkollar regNr...

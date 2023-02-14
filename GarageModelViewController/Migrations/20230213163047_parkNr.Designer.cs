@@ -4,6 +4,7 @@ using GarageModelViewController.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageModelViewController.Migrations
 {
     [DbContext(typeof(GarageModelViewControllerContext))]
-    partial class GarageModelViewControllerContextModelSnapshot : ModelSnapshot
+    [Migration("20230213163047_parkNr")]
+    partial class parkNr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +54,7 @@ namespace GarageModelViewController.Migrations
                     b.Property<int>("NumberOfWheels")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ParkingSpot")
+                    b.Property<int?>("ParkingSpotNr")
                         .HasColumnType("int");
 
                     b.Property<string>("RegistrationNumber")

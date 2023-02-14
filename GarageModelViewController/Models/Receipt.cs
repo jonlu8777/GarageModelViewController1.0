@@ -1,6 +1,6 @@
 ﻿namespace GarageModelViewController.Models
 {
-    public class Receipt
+    public class Receipt // OBS! Använder inte längre denna klass, utan istället ReceiptView Model! 
     {
         private int price;
         //RegNr,in/ut-checkningstid, total parkerings period och pris automatiskt efter att en bil checkatsut. 

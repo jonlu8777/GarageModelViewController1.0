@@ -4,7 +4,7 @@ namespace GarageModelViewController.Models
 {
     public class IndexViewModel
     {
-        [DisplayName("Total Parking Spots")]
+        [DisplayName("Total Parking Spots Available")]
         public int TotalParkingSpots { get; set; } = 30;
 
         
