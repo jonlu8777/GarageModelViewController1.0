@@ -17,6 +17,19 @@
 </p>
 
 <h4>@Html.DisplayNameFor(m=>m.TotalParkingSpots) @Model.TotalParkingSpots</h4>
+<h5>@Html.DisplayNameFor(m=>m.AvailableSpots) 
+
+    @foreach (var item in Model.AvailableSpots)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item)
+            </td>
+ 
+        </tr>
+    }
+</h5>
+
 
 <form asp-action="Filter" asp-controller="ParkedVehicles" method="get">
     <div class="input-group mb-3">

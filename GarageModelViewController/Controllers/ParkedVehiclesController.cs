@@ -123,12 +123,18 @@ namespace GarageModelViewController.Controllers
         {
             if (_context.ParkedVehicle != null)
             {
+                var existingNumbers = await _context.ParkedVehicle.Select(e => e.ParkingSpot).ToListAsync();
+                var allNumbers = Enumerable.Range(1, 5);
+                var result = allNumbers.Where(x => !existingNumbers.Contains(x)).ToList();
+               
+                
                 var parkingSpots = await _context.ParkedVehicle.CountAsync();
                 var list = await _context.ParkedVehicle.ToListAsync();
                 var veiwModel = new IndexViewModel()
                 {
                     Vehicles = list,
-                    TotalParkingSpots = 5-parkingSpots
+                    TotalParkingSpots = 5-parkingSpots,
+                    AvailableSpots=result
 
                 };
 
@@ -150,11 +156,18 @@ namespace GarageModelViewController.Controllers
                                 model.Where(m => (int)m.VehicleType == genre);
             await model.ToListAsync();
 
+
+            var existingNumbers = await _context.ParkedVehicle.Select(e => e.ParkingSpot).ToListAsync();
+            var allNumbers = Enumerable.Range(1, 5);
+            var result = allNumbers.Where(x => !existingNumbers.Contains(x)).ToList();
+
             var parkingSpots = await _context.ParkedVehicle.CountAsync();
             var modelView = new IndexViewModel()
             {
                 Vehicles= model,
-                TotalParkingSpots= 5-parkingSpots
+                TotalParkingSpots= 5-parkingSpots,
+                AvailableSpots=result
+                
             };
 
             return View(nameof(Index), modelView);
@@ -189,7 +202,7 @@ namespace GarageModelViewController.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Park([Bind("Id,Ankomsttid,NumberOfWheels,VehicleType,RegistrationNumber,Color,Brand,ModelName")] ParkedVehicle parkedVehicle)
+        public async Task<IActionResult> Park([Bind("Id,Ankomsttid,NumberOfWheels,VehicleType,RegistrationNumber,Color,Brand,ModelName,ParkingSpot")] ParkedVehicle parkedVehicle)
         {
 
 
@@ -277,7 +290,7 @@ namespace GarageModelViewController.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Ankomsttid,NumberOfWheels,VehicleType,RegistrationNumber,Color,Brand,ModelName")] ParkedVehicle parkedVehicle)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Ankomsttid,NumberOfWheels,VehicleType,RegistrationNumber,Color,Brand,ModelName,ParkingSpot")] ParkedVehicle parkedVehicle)
         {
             if (id != parkedVehicle.Id)
             {
