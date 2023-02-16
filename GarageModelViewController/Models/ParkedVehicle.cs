@@ -55,9 +55,9 @@ namespace GarageModelViewController.Models
 		}
 		public TimeSpan? ParkedTime { get { return DateTime.Now - this.Ankomsttid; } }
 
-        //public int? ParkingSpot { get; set; }	
-        [NotMapped]
-        public IEnumerable<int> ParkingSpot { get; set; } = new List<int>();
+        public int? ParkingSpot { get; set; }	
+        //[NotMapped
+       // public IEnumerable<int> ParkingSpot { get; set; } = new List<int>();
 
     }
 }
