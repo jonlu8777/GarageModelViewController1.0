@@ -123,10 +123,10 @@ namespace GarageModelViewController.Controllers
         {
             if (_context.ParkedVehicle != null)
             {
-                var existingNumbers = await _context.ParkedVehicle.Select(e => e.ParkingSpot).ToListAsync();
-                var allNumbers = Enumerable.Range(1, 5);
-                var result = allNumbers.Where(x => !existingNumbers.Contains(x)).ToList();
+                var existingNumbers = await _context.ParkedVehicle.SelectMany(e => e.ParkingSpot).ToListAsync();
                
+                var allNumbers = Enumerable.Range(1, 5);
+                var result = allNumbers.Where(x => !existingNumbers.Contains(x)).ToList();             
                 
                 var parkingSpots = await _context.ParkedVehicle.CountAsync();
                 var list = await _context.ParkedVehicle.ToListAsync();
@@ -157,7 +157,7 @@ namespace GarageModelViewController.Controllers
             await model.ToListAsync();
 
 
-            var existingNumbers = await _context.ParkedVehicle.Select(e => e.ParkingSpot).ToListAsync();
+            var existingNumbers = await _context.ParkedVehicle.SelectMany(e => e.ParkingSpot).ToListAsync();
             var allNumbers = Enumerable.Range(1, 5);
             var result = allNumbers.Where(x => !existingNumbers.Contains(x)).ToList();
 
@@ -221,25 +221,32 @@ namespace GarageModelViewController.Controllers
                         return View(parkedVehicle);
 
                     }
-                    if(_context.ParkedVehicle.Any(e=>e.ParkingSpot >= 1)) //Om Det finns något parkerat forddon sedan tidigare.  
-                    {
-                   
+                   // var listOfparkingSpots = parkedVehicle.ParkingSpot.ToList();
 
-     
-                        var existingNumbers = await _context.ParkedVehicle.Select(e=>e.ParkingSpot).ToListAsync();
+                    
+                    var resu = _context.ParkedVehicle.Where(e=>e.Id >0).SelectMany(e=>e.ParkingSpot);
+                    if (resu != null)
+                    // if(_context.ParkedVehicle.Any(e=>e.ParkingSpot == 1)) //Om Det finns något parkerat forddon sedan tidigare.                  
+                    {
+                        var existingNumbers = await _context.ParkedVehicle.SelectMany(e => e.ParkingSpot).ToListAsync();
 
                         var allNumbers = Enumerable.Range(1, 5);
                         var result = allNumbers.Where(x => !existingNumbers.Contains(x)).First();
-
-                        parkedVehicle.ParkingSpot =result;
-                       
-
+                        var listParkingSpots = new List<int>() { result};
+                        parkedVehicle.ParkingSpot = listParkingSpots;
 
                     }
                     else //Annars tillsätt ett första P-plats
-                        parkedVehicle.ParkingSpot = 1;
-                
+                    {
+                          
 
+                        if (parkedVehicle.VehicleType == Models.VehicleType.Car|| parkedVehicle.VehicleType == Models.VehicleType.None|| parkedVehicle.VehicleType == Models.VehicleType.Motorcycle)
+                            parkedVehicle.ParkingSpot = new List<int>() { 1 };
+                        if(parkedVehicle.VehicleType == Models.VehicleType.Bus)
+                            parkedVehicle.ParkingSpot= new List<int>() {1,2 };
+                        if(parkedVehicle.VehicleType == Models.VehicleType.Airplane)
+                            parkedVehicle.ParkingSpot= new List<int> {1,2,3};
+                    }
 
                  
 

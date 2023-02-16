@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Linq;
 
 namespace GarageModelViewController.Models
@@ -13,9 +15,9 @@ namespace GarageModelViewController.Models
 	    private string modelName;
 		private int numberOfWheels;
 		private VehicleType vehicleType = VehicleType.None;
-		
 
-		public int Id { get; set; }
+        [Key]
+        public int Id { get; set; }
         [ReadOnly(true)]
 		[DisplayName("Time Of Arrival")]
         public DateTime? Ankomsttid {	get; private set;  } = DateTime.Now;
@@ -51,9 +53,11 @@ namespace GarageModelViewController.Models
 			get { return modelName; }
 			set { modelName = value; }
 		}
-		public TimeSpan? ParkedTime { get { return DateTime.Now - this.Ankomsttid; } }	
+		public TimeSpan? ParkedTime { get { return DateTime.Now - this.Ankomsttid; } }
 
-		public int? ParkingSpot { get; set; }	
+        //public int? ParkingSpot { get; set; }	
+        [NotMapped]
+        public IEnumerable<int> ParkingSpot { get; set; } = new List<int>();
 
     }
 }
